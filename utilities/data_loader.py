@@ -138,7 +138,7 @@ class Loader:
         print("-------------------")
 
 
-def load_train_val_test(self, only_test=False):
+    def load_train_val_test(self, only_test=False):
         X_train, X_rest, y_train, y_rest = train_test_split(self.X, self.y,
                                                             test_size=0.3,
                                                             stratify=self.y,
@@ -164,7 +164,7 @@ def load_train_val_test(self, only_test=False):
         else:
             return training, validation, testing
 
-def load_final(self):
+    def load_final(self):
         X_train, X_test, y_train, y_test = train_test_split(self.X, self.y,
                                                             test_size=0.1,
                                                             stratify=self.y,
