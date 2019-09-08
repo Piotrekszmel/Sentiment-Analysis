@@ -90,13 +90,12 @@ def data_splits(dataset, final=False):
         return training, validation, test
 
 
-class Task4Loader:
+class Loader:
     """
-    Task 4: Sentiment Analysis in Twitter
+    Sentiment Analysis in Twitter
     """
 
-    def __init__(self, word_indices, text_lengths, subtask="A", silver=False,
-                 **kwargs):
+    def __init__(self, word_indices, text_lengths, **kwargs):
 
         self.word_indices = word_indices
 
