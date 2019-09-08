@@ -8,7 +8,7 @@ from keras.layers import Dropout, Dense, Bidirectional, LSTM, \
 from keras.models import Sequential
 from keras.optimizers import Adam
 from keras.regularizers import l2
-from kutilities.layers import AttentionWithContext, Attention, MeanOverTime
+from utilities.layers import AttentionWithContext, Attention, MeanOverTime
 from sklearn import preprocessing
 
 
@@ -216,8 +216,8 @@ def cnn_multi_filters(wv, sent_length, nfilters, nb_filters, **kwargs):
 
     pooling_reps = []
     for i in nfilters:
-        feat_maps = Convolution1D(nb_filter=nb_filters,
-                                  filter_length=i,
+        feat_maps = Convolution1D(filters=nb_filters,
+                                  kernel_size=i,
                                   border_mode="valid",
                                   activation="relu",
                                   subsample_length=1)(emb_text)
