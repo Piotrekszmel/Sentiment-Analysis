@@ -3,18 +3,16 @@ import numpy as np
 from keras.callbacks import ModelCheckpoint
 from keras.layers import LSTM
 from utilities.callbacks import MetricsCallback, PlottingCallback
-from utilities.data_preparation import get_labels_to_categories_map, \
-    get_class_weights2, onehot_to_categories
+from utilities.data_preparation import get_labels_to_categories_map, get_class_weights2, onehot_to_categories
 from sklearn.metrics import f1_score, precision_score
 from sklearn.metrics import recall_score
-
 from data.data_loader import DataLoader
 from models.nn_models import build_attention_RNN
 from utilities.data_loader import get_embeddings, Loader, prepare_dataset
 
 np.random.seed(1337)
 
-def sentiment_model(WV_CORPUS, WV_DIM, max_length, PERSIST,  FINAL=True, SEMEVAL_GOLD=True):
+def sentiment_model(WV_CORPUS, WV_DIM, max_length, PERSIST,  FINAL=True, GOLD=True):
     """
     ##Final:
     - if FINAL == False,  then the dataset will be split in {train, val, test}
@@ -35,6 +33,7 @@ def sentiment_model(WV_CORPUS, WV_DIM, max_length, PERSIST,  FINAL=True, SEMEVAL
     ############################################################################
     # LOAD DATA
     ############################################################################
+    
     embeddings, word_indices = get_embeddings(corpus=WV_CORPUS, dim=WV_DIM)
 
     if PERSIST:
@@ -48,7 +47,7 @@ def sentiment_model(WV_CORPUS, WV_DIM, max_length, PERSIST,  FINAL=True, SEMEVAL
     else:
         training, validation, testing = loader.load_train_val_test()
 
-    if SEMEVAL_GOLD:
+    if GOLD:
         print("\n > running in Post-Mortem mode!\n")
         gold_data = DataLoader().get_gold()
         gX = [obs[1] for obs in gold_data]
@@ -64,6 +63,7 @@ def sentiment_model(WV_CORPUS, WV_DIM, max_length, PERSIST,  FINAL=True, SEMEVAL
     ############################################################################
     # NN MODEL
     ############################################################################
+    
     nn_model = build_attention_RNN(embeddings, classes=3, max_length=max_length,
                                 unit=LSTM, layers=2, cells=150,
                                 bidirectional=True,
@@ -89,6 +89,7 @@ def sentiment_model(WV_CORPUS, WV_DIM, max_length, PERSIST,  FINAL=True, SEMEVAL
     ############################################################################
     # CALLBACKS
     ############################################################################
+    
     classes = ['positive', 'negative', 'neutral']
     class_to_cat_mapping = get_labels_to_categories_map(classes)
     cat_to_class_mapping = {v: k for k, v in
@@ -130,6 +131,7 @@ def sentiment_model(WV_CORPUS, WV_DIM, max_length, PERSIST,  FINAL=True, SEMEVAL
     ############################################################################
     # APPLY CLASS WEIGHTS
     ############################################################################
+    
     class_weights = get_class_weights2(onehot_to_categories(training[1]),
                                     smooth_factor=0)
     print("Class weights:",
