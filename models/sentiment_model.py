@@ -12,7 +12,7 @@ from utilities.data_loader import get_embeddings, Loader, prepare_dataset
 
 np.random.seed(1337)
 
-def sentiment_model(WV_CORPUS, WV_DIM, max_length, PERSIST,  FINAL=True, GOLD=True):
+def Sentiment_Analysis(WV_CORPUS, WV_DIM, max_length, PERSIST,  FINAL=True, GOLD=True):
     """
     ##Final:
     - if FINAL == False,  then the dataset will be split in {train, val, test}

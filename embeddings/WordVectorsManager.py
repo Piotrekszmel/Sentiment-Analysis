@@ -1,8 +1,7 @@
 import errno
 import os
 import pickle
-
-import numpy
+import numpy as np
 
 from utilities.ResourceManager import ResourceManager
 
@@ -32,7 +31,7 @@ class WordVectorsManager(ResourceManager):
             for i, line in enumerate(f):
                 values = line.split()
                 word = values[0]
-                coefs = numpy.asarray(values[1:], dtype='float32')
+                coefs = np.asarray(values[1:], dtype='float32')
                 # if not self.is_ascii(word):
                 #     print(word)
 

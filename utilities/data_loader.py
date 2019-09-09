@@ -91,10 +91,7 @@ def data_splits(dataset, final=False):
 
 
 class Loader:
-    """
-    Sentiment Analysis in Twitter
-    """
-
+    
     def __init__(self, word_indices, text_lengths, **kwargs):
 
         self.word_indices = word_indices
