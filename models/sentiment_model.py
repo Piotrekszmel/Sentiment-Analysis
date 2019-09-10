@@ -139,7 +139,8 @@ def Sentiment_Analysis(WV_CORPUS, WV_DIM, max_length, PERSIST,  FINAL=True, GOLD
 
     history = nn_model.fit(training[0], training[1],
                         validation_data=validation if not FINAL else testing,
-                        epochs=50, batch_size=50,
+                        epochs=15, batch_size=50,
                         class_weight=class_weights, callbacks=_callbacks)
 
     pickle.dump(history.history, open("hist.pickle", "wb"))
+    nn_model.save_weights(os.path.join("/data/", "bi_model_weights_1.h5"))
