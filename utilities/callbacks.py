@@ -170,7 +170,7 @@ class PlottingCallback(Callback):
             if len(metric) > 1:  # custom metric
                 custom_metrics_keys[metric[0]].append(metric[1])
         return custom_metrics_keys
-
+    """
     def on_epoch_end(self, epoch, logs={}):
         self.fig.clf()
         linewidth = 1.2
@@ -239,7 +239,7 @@ class PlottingCallback(Callback):
         self.fig.canvas.flush_events()
 
         self.save_plot()
-
+    """
     def on_train_end(self, logs={}):
         plt.close(self.fig)
         # self.save_plot()
