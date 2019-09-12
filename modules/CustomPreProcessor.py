@@ -1,6 +1,5 @@
 import os
 import pickle
-
 import numpy
 from cachetools import cached
 from sklearn.base import BaseEstimator, TransformerMixin
