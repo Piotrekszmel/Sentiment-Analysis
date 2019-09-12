@@ -1,6 +1,7 @@
 import pickle
 
-loaded_model = pickle.load(open("hist.pickle", "rb"))
-for key in loaded_model.keys():
-    print(key)
+word_indices = pickle.load(open("model_word_indices.pickle", "rb"))
+
+first2pairs = {k: word_indices[k] for k in sorted(word_indices.keys())[:2]}
+print(first2pairs)
 

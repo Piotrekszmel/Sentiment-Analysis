@@ -1,5 +1,7 @@
 import pickle
+import os
 import numpy as np
+import sys
 from keras.callbacks import ModelCheckpoint
 from keras.layers import LSTM
 from utilities.callbacks import MetricsCallback, PlottingCallback
@@ -85,7 +87,7 @@ def Sentiment_Analysis(WV_CORPUS, WV_DIM, max_length, PERSIST,  FINAL=True, GOLD
     #                              drop_conv=0.5, )
 
     print(nn_model.summary())
-
+    '''
     ############################################################################
     # CALLBACKS
     ############################################################################
@@ -143,4 +145,5 @@ def Sentiment_Analysis(WV_CORPUS, WV_DIM, max_length, PERSIST,  FINAL=True, GOLD
                         class_weight=class_weights, callbacks=_callbacks)
 
     pickle.dump(history.history, open("hist.pickle", "wb"))
-    nn_model.save_weights(os.path.join("/data/", "bi_model_weights_1.h5"))
+    nn_model.save_weights(os.path.join("/home/pszmelcz/Desktop/TwitterSentimentAnalysis", "bi_model_weights_1.h5"))
+    '''
