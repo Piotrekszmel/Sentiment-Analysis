@@ -13,7 +13,7 @@ from sklearn.metrics import recall_score
 from data.data_loader import DataLoader
 from models.nn_models import build_attention_RNN
 from utilities.data_loader import get_embeddings, Loader, prepare_dataset
-
+from evaluate import predict_class
 
 #Sentiment_Analysis("datastories.twitter", 300, 50, PERSIST=False, FINAL=True)
 
@@ -46,3 +46,7 @@ prediction = nn_model.predict(tweet)
 print(np.argmax(nn_model.predict(tweet)[0]))
 print(prediction)                              
 """
+
+tweets, predicted_y, y = predict_class(["I am happy", "I am sad :(", "Poland is a country"], [2,0,1], "datastories.twitter", 300)
+for tweet, label in zip(tweets, predicted_y):
+    print("text: ",tweet, " ''' predicted: ", predicted_y, " ||| label: ", label)

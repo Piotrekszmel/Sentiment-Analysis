@@ -3,13 +3,13 @@ from models.nn_models import build_attention_RNN
 from keras.layers import LSTM
 import numpy as np
 
-def predict_class(X, corpus, dims):
+def predict_class(X, y, corpus, dim):
     tweets = []
     labels = []
     
-    embeddings, word_indices = get_embeddings(corpus='datastories.twitter', dim=300)
+    embeddings, word_indices = get_embeddings(corpus=corpus, dim=dim)
     loader = Loader(word_indices, text_lengths=50)
-    X, y = prepare_dataset([X], -1, loader.pipeline, False, True)
+    X, y = prepare_dataset(X, y, loader.pipeline, False, True)
 
     nn_model = build_attention_RNN(embeddings, classes=3, max_length=50,
                                 unit=LSTM, layers=2, cells=150,
@@ -30,4 +30,4 @@ def predict_class(X, corpus, dims):
         predicted_y = np.argmax(nn_model.predict(tweet)[0])
         tweets.append(tweet)
         labels.append(predicted_y)
-    return tweets, labels 
+    return tweets, labels, y
