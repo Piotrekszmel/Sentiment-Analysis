@@ -17,7 +17,7 @@ from utilities.data_loader import get_embeddings, Loader, prepare_dataset
 
 #Sentiment_Analysis("datastories.twitter", 300, 50, PERSIST=False, FINAL=True)
 
-
+"""
 embeddings, word_indices = get_embeddings(corpus='datastories.twitter', dim=300)
 
 loader = Loader(word_indices, text_lengths=50)
@@ -40,7 +40,9 @@ nn_model = build_attention_RNN(embeddings, classes=3, max_length=50,
                                 clipnorm=1, lr=0.001, loss_l2=0.0001)
 nn_model.load_weights('./bi_model_weights_1.h5')
 
- 
+
+
 prediction = nn_model.predict(tweet)
 print(np.argmax(nn_model.predict(tweet)[0]))
 print(prediction)                              
+"""
