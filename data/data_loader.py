@@ -58,7 +58,7 @@ class DataLoader:
         return data
 
     def get_gold(self):
-        fname = "SemEval2017-task4-test.subtask-A.english.txt"
+        fname = "gold.txt"
         task_dir = "gold"
         file = os.path.join(os.path.dirname(__file__), task_dir, fname)
         data = self.parse_file(file)
