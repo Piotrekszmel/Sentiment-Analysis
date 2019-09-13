@@ -15,37 +15,6 @@ from models.nn_models import build_attention_RNN
 from utilities.data_loader import get_embeddings, Loader, prepare_dataset
 from evaluate import predict_class
 
-#Sentiment_Analysis("datastories.twitter", 300, 50, PERSIST=False, FINAL=True)
-
-"""
-embeddings, word_indices = get_embeddings(corpus='datastories.twitter', dim=300)
-
-loader = Loader(word_indices, text_lengths=50)
-tweet = '"I am happy"'
-tweet, label = prepare_dataset([tweet], -1, loader.pipeline, False, True)
-
-
-
-nn_model = build_attention_RNN(embeddings, classes=3, max_length=50,
-                                unit=LSTM, layers=2, cells=150,
-                                bidirectional=True,
-                                attention="simple",
-                                noise=0.3,
-                                final_layer=False,
-                                dropout_final=0.5,
-                                dropout_attention=0.5,
-                                dropout_words=0.3,
-                                dropout_rnn=0.3,
-                                dropout_rnn_U=0.3,
-                                clipnorm=1, lr=0.001, loss_l2=0.0001)
-nn_model.load_weights('bi_model_weights_1.h5')
-
-
-
-prediction = nn_model.predict(tweet)
-print(np.argmax(nn_model.predict(tweet)[0]))
-print(prediction)    """                          
-
 
 tweets, predicted_y, label = predict_class(["I am happy", "I am sad :(", "Poland is a country"], [2,0,1], "datastories.twitter", 300)
 os.system("clear")
