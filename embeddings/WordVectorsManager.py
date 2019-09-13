@@ -32,14 +32,7 @@ class WordVectorsManager(ResourceManager):
                 values = line.split()
                 word = values[0]
                 coefs = np.asarray(values[1:], dtype='float32')
-                # if not self.is_ascii(word):
-                #     print(word)
-
-                # if word.lower() in {'<unk>', "<unknown>"}:
-                #     print(word)
-                #     print("UNKNOWN")
-                #     print()
-
+               
                 if self.omit_non_english and not self.is_ascii(word):
                     continue
 
