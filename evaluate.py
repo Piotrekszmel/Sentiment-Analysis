@@ -25,9 +25,11 @@ def predict_class(X, y, corpus, dim):
                                 clipnorm=1, lr=0.001, loss_l2=0.0001)
     
     nn_model.load_weights('./bi_model_weights_1.h5')
-
+    
     for tweet in X:
-        predicted_y = np.argmax(nn_model.predict(tweet)[0])
+        tweet = tweet.reshape(50, 1).T
+        predicted_y = nn_model.predict_classes(tweet)
         tweets.append(tweet)
         labels.append(predicted_y)
     return tweets, labels, y
+    

@@ -21,7 +21,7 @@ from evaluate import predict_class
 embeddings, word_indices = get_embeddings(corpus='datastories.twitter', dim=300)
 
 loader = Loader(word_indices, text_lengths=50)
-tweet = 'i am so happy. :)'
+tweet = '"I am happy"'
 tweet, label = prepare_dataset([tweet], -1, loader.pipeline, False, True)
 
 
@@ -38,15 +38,16 @@ nn_model = build_attention_RNN(embeddings, classes=3, max_length=50,
                                 dropout_rnn=0.3,
                                 dropout_rnn_U=0.3,
                                 clipnorm=1, lr=0.001, loss_l2=0.0001)
-nn_model.load_weights('./bi_model_weights_1.h5')
+nn_model.load_weights('bi_model_weights_1.h5')
 
 
 
 prediction = nn_model.predict(tweet)
 print(np.argmax(nn_model.predict(tweet)[0]))
-print(prediction)                              
-"""
+print(prediction)    """                          
 
-tweets, predicted_y, y = predict_class(["I am happy", "I am sad :(", "Poland is a country"], [2,0,1], "datastories.twitter", 300)
-for tweet, label in zip(tweets, predicted_y):
-    print("text: ",tweet, " ''' predicted: ", predicted_y, " ||| label: ", label)
+
+tweets, predicted_y, label = predict_class(["I am happy", "I am sad :(", "Poland is a country"], [2,0,1], "datastories.twitter", 300)
+os.system("clear")
+for predict_y, label in zip(predicted_y, label):
+    print(float(predict_y), ' | ', label)
