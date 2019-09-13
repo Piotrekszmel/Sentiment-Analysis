@@ -21,7 +21,6 @@ from kutilities.helpers.ui import move_figure
 
 plt.rc('font', **{'family': 'serif', 'serif': ['Computer Modern Roman'],
                   'monospace': ['Computer Modern Typewriter']})
-# plt.rc('text', usetex=True)
 plt.rc("figure", facecolor="white")
 
 
@@ -170,76 +169,7 @@ class PlottingCallback(Callback):
             if len(metric) > 1:  # custom metric
                 custom_metrics_keys[metric[0]].append(metric[1])
         return custom_metrics_keys
-    """
-    def on_epoch_end(self, epoch, logs={}):
-        self.fig.clf()
-        linewidth = 1.2
-        self.fig.set_size_inches(
-            self.width * (1 + len(self.get_metrics(logs))),
-            self.height, forward=True)
-        custom_metrics_keys = self.get_metrics(logs)
-
-        total_plots = len(custom_metrics_keys) + 1
-        ##################################################
-        # First - Plot Models loss
-        self.model_loss.append(logs['loss'])
-        self.validation_loss.append(logs['val_loss'])
-
-        ax = self.fig.add_subplot(1, total_plots, 1)
-        ax.plot(self.model_loss, linewidth=linewidth)
-        ax.plot(self.validation_loss, linewidth=linewidth)
-        ax.set_title('model loss', fontsize=10)
-        ax.set_ylabel('loss')
-        ax.set_xlabel('epoch')
-        ax.legend(['train', 'val'], loc='upper left', fancybox=True)
-        ax.grid(True)
-        ax.grid(b=True, which='major', color='gray', linewidth=.5)
-        ax.grid(b=True, which='minor', color='gray', linewidth=0.5)
-        ax.tick_params(labelsize=10)
-        # leg = ax.gca().get_legend()
-
-        ##################################################
-        # Second - Plot Custom Metrics
-        for i, (dataset_name, metrics) in enumerate(
-                sorted(custom_metrics_keys.items(), reverse=False)):
-            axs = self.fig.add_subplot(1, total_plots, i + 2)
-            axs.set_title(dataset_name, fontsize=10)
-            axs.set_ylabel('score')
-            axs.set_xlabel('epoch')
-            if self.grid_ranges:
-                axs.set_ylim(self.grid_ranges)
-
-            # append the values to the corresponding array
-            for m in sorted(metrics):
-                entry = ".".join([dataset_name, m])
-                self.custom_metrics[entry].append(logs[entry])
-                axs.plot(self.custom_metrics[entry], label=m,
-                         linewidth=linewidth)
-
-            axs.tick_params(labelsize=10)
-            labels = list(sorted(metrics))
-            if self.benchmarks:
-                for (label, benchmark), color in zip(self.benchmarks.items(),
-                                                     ["y", "r"]):
-                    axs.axhline(y=benchmark, linewidth=linewidth, color=color)
-                    labels = labels + [label]
-            axs.legend(labels, loc='upper left', fancybox=True)
-            axs.grid(True)
-            axs.grid(b=True, which='major', color='gray', linewidth=.5)
-            axs.grid(b=True, which='minor', color='gray', linewidth=0.5)
-
-        plt.rcParams.update({'font.size': 10})
-
-        desc = get_model_desc(self.model)
-        self.fig.text(.02, .02, desc, verticalalignment='bottom', wrap=True,
-                      fontsize=8)
-        self.fig.tight_layout()
-        self.fig.subplots_adjust(bottom=.18)
-        self.fig.canvas.draw()
-        self.fig.canvas.flush_events()
-
-        self.save_plot()
-    """
+    
     def on_train_end(self, logs={}):
         plt.close(self.fig)
         # self.save_plot()
@@ -354,7 +284,6 @@ class WeightsCallback(Callback):
         self.fig.canvas.flush_events()
 
     def update_plot(self):
-
         layers = self.get_trainable_layers()
 
         for layer in layers:

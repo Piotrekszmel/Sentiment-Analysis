@@ -87,49 +87,7 @@ def Sentiment_Analysis(WV_CORPUS, WV_DIM, max_length, PERSIST,  FINAL=True, GOLD
     #                              drop_conv=0.5, )
 
     print(nn_model.summary())
-    '''
-    ############################################################################
-    # CALLBACKS
-    ############################################################################
-    
-    classes = ['positive', 'negative', 'neutral']
-    class_to_cat_mapping = get_labels_to_categories_map(classes)
-    cat_to_class_mapping = {v: k for k, v in
-                            get_labels_to_categories_map(classes).items()}
-    
-    metrics = {
-    "f1_pn": (lambda y_test, y_pred:
-              f1_score(y_test, y_pred, average='macro',
-                       labels=[class_to_cat_mapping['positive'],
-                               class_to_cat_mapping['negative']])),
-    "M_recall": (
-        lambda y_test, y_pred: recall_score(y_test, y_pred, average='macro')),
-    "M_precision": (
-        lambda y_test, y_pred: precision_score(y_test, y_pred,
-                                               average='macro'))
-    }
-
-    
-    _datasets = {}
-    _datasets["1-train"] = training,
-    _datasets["2-val"] = validation if not FINAL else testing
-    if not FINAL:
-        _datasets["3-test"] = testing
-
-    metrics_callback = MetricsCallback(datasets=_datasets, metrics=metrics)
-    plotting = PlottingCallback(grid_ranges=(0.5, 0.75), height=5,
-                                benchmarks={"SE17": 0.681})
-
-    _callbacks = []
-    _callbacks.append(metrics_callback)
-    _callbacks.append(plotting)
-
-    if PERSIST:
-        checkpointer = ModelCheckpoint(filepath=best_model(),
-                                    monitor='val.macro_recall', mode="max",
-                                    verbose=1, save_best_only=True)
-        _callbacks.append(checkpointer)
-    
+    """
     ############################################################################
     # APPLY CLASS WEIGHTS
     ############################################################################
@@ -146,4 +104,4 @@ def Sentiment_Analysis(WV_CORPUS, WV_DIM, max_length, PERSIST,  FINAL=True, GOLD
 
     pickle.dump(history.history, open("hist.pickle", "wb"))
     nn_model.save_weights(os.path.join("/home/pszmelcz/Desktop/TwitterSentimentAnalysis", "bi_model_weights_1.h5"))
-    '''
+    """
