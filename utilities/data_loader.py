@@ -1,15 +1,17 @@
-import random
 from ekphrasis.classes.preprocessor import TextPreProcessor
 from ekphrasis.classes.tokenizer import SocialTokenizer
 from ekphrasis.dicts.emoticons import emoticons
-from utilities.data_preparation import print_dataset_statistics, labels_to_categories, categories_to_onehot
+from ..utilities.data_preparation import print_dataset_statistics, labels_to_categories, categories_to_onehot
 from sklearn.model_selection import train_test_split
-from data.data_loader import DataLoader
 from sklearn.pipeline import Pipeline
+from ..embeddings.WordVectorsManager import WordVectorsManager
+from ..modules.CustomPreProcessor import CustomPreProcessor
+from ..modules.EmbeddingsExtractor import EmbeddingsExtractor
+from ..data.data_loader import DataLoader
 import numpy as np
-from embeddings.WordVectorsManager import WordVectorsManager
-from modules.CustomPreProcessor import CustomPreProcessor
-from modules.EmbeddingsExtractor import EmbeddingsExtractor
+import random
+import sys
+sys.path.append('..')
 
 
 def prepare_dataset(X, y, pipeline, y_one_hot=True, y_as_is=False):
@@ -54,7 +56,7 @@ def get_embeddings(corpus, dim):
 
 
 def prepare_text_only_dataset(X, pipeline):
-     X = pipeline.fit_transform(X)
+     X = pipeline.transform(X)
      return X
 
 
