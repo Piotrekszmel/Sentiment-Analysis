@@ -1,7 +1,12 @@
-from utilities.data_loader import get_embeddings, Loader, prepare_dataset
-from models.nn_models import build_attention_RNN
+import sys
+sys.path.append('utilities/')
+sys.path.append("models/")
+
+from SentimentAnalysis.utilities.data_loader import get_embeddings, Loader, prepare_dataset, prepare_text_only_dataset
+from SentimentAnalysis.models.nn_models import build_attention_RNN
 from keras.layers import LSTM
 import numpy as np
+from sklearn.pipeline import Pipeline
 
 def predict_class(X, y, corpus, dim):
     tweets = []
@@ -24,7 +29,7 @@ def predict_class(X, y, corpus, dim):
                                 dropout_rnn_U=0.3,
                                 clipnorm=1, lr=0.001, loss_l2=0.0001)
     
-    nn_model.load_weights('./bi_model_weights_1.h5')
+    nn_model.load_weights('sentiment_analysis/weights/bi_model_weights_1.h5')
     
     for tweet in X:
         tweet = tweet.reshape(50, 1).T
@@ -32,4 +37,11 @@ def predict_class(X, y, corpus, dim):
         tweets.append(tweet)
         labels.append(predicted_y)
     return tweets, labels, y
+
     
+def predict_sentiment_single_tweet(tweet, model, pipeline: Pipeline):
+    tweet = prepare_text_only_dataset(tweet, pipeline)
+    tweet = tweet[0].reshape(1, 50)
+    prediction = model.predict(tweet)
+    index = np.argmax(prediction)
+    return [index]
