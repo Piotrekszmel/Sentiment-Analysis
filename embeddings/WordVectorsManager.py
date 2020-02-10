@@ -25,6 +25,9 @@ class WordVectorsManager(ResourceManager):
         
 
     def write(self):
+        """
+        Writes to file word embeddings dictionary based on given word embedding file
+        """
         _word_vector_file = os.path.join(os.path.dirname(__file__), self.wv_filename)
 
         if os.path.exists(_word_vector_file):
@@ -56,6 +59,9 @@ class WordVectorsManager(ResourceManager):
 
 
     def read(self):
+        """
+        If exists loads parsed_file else starts self.write() and then loads parsed_file
+        """
         _parsed_file = os.path.join(os.path.dirname(__file__), self.parsed_filename)
         
         if os.path.exists(_parsed_file):
