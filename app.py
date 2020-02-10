@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, url_for, redirect
 import tensorflow as tf
+from tensorflow.python.keras.backend import set_session
 
 from sentiment_analysis.evaluate import predict_sentiment_single_tweet 
 from sentiment_analysis.models.utils import create_model
@@ -21,8 +22,8 @@ def sentiment():
         with graph.as_default():
             set_session(sess)
             prediction = predict_sentiment_single_tweet(message, sentiment_model, loader.pipeline)
-            return render_template('sentiment.html', prediction=prediction[0])
-    return render_template("sentiment.html")
+            return render_template('index.html', prediction=prediction[0])
+    return render_template("index.html")
 
 
 if __name__ == "__main__":
