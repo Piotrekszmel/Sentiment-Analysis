@@ -16,6 +16,10 @@ from sklearn import preprocessing
 
 def embeddings_layer(max_length, embeddings, trainable=False, masking=False,
                      scale=False, normalize=False):
+    """
+    Create embeddings layer
+    :param max_length : maximum length of input
+    """
     if scale:
         print("Scaling embedding weights...")
         embeddings = preprocessing.scale(embeddings)
@@ -50,6 +54,8 @@ def get_RNN(unit=LSTM, cells=64, bi=False, return_sequences=True, dropout_U=0.,
 
 def build_attention_RNN(embeddings, classes, max_length, unit=LSTM, cells=64,
                         layers=1, **kwargs):
+    """Builds RNN model with attention based on given parameters"""
+    
     # parameters
     bi = kwargs.get("bidirectional", False)
     noise = kwargs.get("noise", 0.)
@@ -101,77 +107,4 @@ def build_attention_RNN(embeddings, classes, max_length, unit=LSTM, cells=64,
                  loss="categorical_crossentropy")
 
     return model
-
-
-def target_RNN(wv, tweet_max_length, aspect_max_length, classes=2, **kwargs):
-    noise = kwargs.get("noise", 0)
-    trainable = kwargs.get("trainable", False)
-    rnn_size = kwargs.get("rnn_size", 75)
-    rnn_type = kwargs.get("rnn_type", LSTM)
-    final_size = kwargs.get("final_size", 100)
-    final_type = kwargs.get("final_type", "linear")
-    use_final = kwargs.get("use_final", False)
-    drop_text_input = kwargs.get("drop_text_input", 0.)
-    drop_text_rnn = kwargs.get("drop_text_rnn", 0.)
-    drop_text_rnn_U = kwargs.get("drop_text_rnn_U", 0.)
-    drop_target_rnn = kwargs.get("drop_target_rnn", 0.)
-    drop_rep = kwargs.get("drop_rep", 0.)
-    drop_final = kwargs.get("drop_final", 0.)
-    activity_l2 = kwargs.get("activity_l2", 0.)
-    clipnorm = kwargs.get("clipnorm", 5)
-    bi = kwargs.get("bi", False)
-    lr = kwargs.get("lr", 0.001)
-
-    attention = kwargs.get("attention", "simple")
-
-    shared_RNN = get_RNN(rnn_type, rnn_size, bi=bi, return_sequences=True, dropout_U=drop_text_rnn_U)
-
-    input_tweet = Input(shape=[tweet_max_length], dtype="int32")
-    input_aspect = Input(shape=[aspect_max_length], dtype="int32")
-
-    tweets_emb = embeddings_layer(max_length=tweet_max_length, embeddings=wv,
-                                  trainable=trainable, masking=True)(input_tweet)
-    tweets_emb = GaussianNoise(noise)(tweets_emb)
-    tweets_emb = Dropout(drop_text_input)(tweets_emb)
-
-    aspects_emb = embeddings_layer(max_length=aspect_max_length, embeddings=wv,
-                                   trainable=trainable, masking=True)(input_aspect)
-    aspects_emb = GaussianNoise(noise)(aspects_emb)
-
-    h_tweets = shared_RNN(tweets_emb)
-    h_tweets = Dropout(drop_text_rnn)(h_tweets)
-
-    h_aspects = shared_RNN(aspects_emb)
-    h_aspects = Dropout(drop_target_rnn)(h_aspects)
-    h_aspects = MeanOverTime()(h_aspects)
-    h_aspects = RepeatVector(tweet_max_length)(h_aspects)
-
-    # Merge of Aspect + Tweet
-    representation = concatenate([h_tweets, h_aspects])
-
-    att_layer = AttentionWithContext if attention == "context" else Attention
-    representation = att_layer()(representation)
-    representation = Dropout(drop_rep)(representation)
-
-    if use_final:
-        if final_type == "maxout":
-            representation = MaxoutDense(final_size)(representation)
-        else:
-            representation = Dense(final_size, activation=final_type)(
-                representation)
-        representation = Dropout(drop_final)(representation)
-
-    probabilities = Dense(1 if classes == 2 else classes,
-                          activation="sigmoid" if classes == 2 else "softmax",
-                          activity_regularizer=l2(activity_l2))(representation)
-
-    model = Model(input=[input_aspect, input_tweet], output=probabilities)
-
-    loss = "binary_crossentropy" if classes == 2 else "categorical_crossentropy"
-    model.compile(optimizer=Adam(clipnorm=clipnorm, lr=lr), loss=loss)
-
-    return model
-
-
-    
     
