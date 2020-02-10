@@ -17,27 +17,31 @@ def index():
 
 @app.route("/Sentiment", methods=["GET", "POST"])
 def sentiment():
-    f = request.form["data_file"]
-    texts = []
-    predictions = []
-    if f is not '':
-        with open(f) as file:
-            for line in file:
-                line = line.replace("\r", "").replace("\n", "")
-                texts.append(line)
     if request.method == "POST":
+        f = request.form["data_file"]
+        texts = []
+        predictions = []
         message = request.form["text"]
+        if message is not '':
+            texts.append(message)
+        if f is not '':
+            with open(f) as file:
+                for line in file:
+                    line = line.replace("\r", "").replace("\n", "")
+                    texts.append(line)
+        
         with graph.as_default():
             set_session(sess)
             if message is not '':
                 prediction = predict_sentiment_single_tweet(message, sentiment_model, loader.pipeline)
                 predictions.append(prediction)
-                texts.append(message)
             if texts is not []:
-                for text in texts:
+                for text in texts[1:]:
                     prediction = predict_sentiment_single_tweet(text, sentiment_model, loader.pipeline)
                     predictions.append(prediction)
-                return render_template('index.html', predictions=predictions, texts=texts)
+                print(texts, "\n")
+                print(predictions)
+                return render_template('sentiment.html', predictions=predictions, texts=texts)
             else:
                 render_template("index.html")
     return render_template("index.html")

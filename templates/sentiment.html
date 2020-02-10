@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sentiment</title>
+  <link rel="stylesheet" href="../static/css/index.css">
+  <style>
+    .outer {
+    width: 100%;
+    }
+    
+    .outer label {
+        width: 50%;
+    }
+    
+    .outer input {
+        width: 50%;
+    }
+  </style>
+</head>
+<body style="background-color: #1e1e1e">
+	<div class="prediction-section">
+        <br/>
+        {% for prediction in predictions %}    
+            {% if prediction[0] == 0 %}
+                <p style="margin-left: auto; margin-right: auto; color: red; font-size: 1.3em">{{loop.index}}. {{texts[loop.index0]}} (NEGATIVE)<br/> <p>
+            {% elif prediction[0] == 1 %}
+                <p style="margin-left: auto; margin-right: auto; display: inline-block; text-align: left; color: blue; font-size: 1.3em">{{loop.index}}. {{texts[loop.index0]}} (NEUTRAL)<br/> </p>
+            {% elif prediction[0] == 2 %}
+                <p style="margin-left: auto; margin-right: auto; display: inline-block; text-align: left; color: green; font-size: 1.3em;">{{loop.index}}. {{texts[loop.index0]}} (POSITIVE)<br/> </p>
+            {% else %}
+                <p></p>
+            {% endif %}
+        {% endfor %}
+    </div>
+</body>
+</html>
