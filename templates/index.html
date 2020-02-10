@@ -5,6 +5,68 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sentiment</title>
   <link rel="stylesheet" href="../static/css/index.css">
+  <style>
+      .button1 {
+    display: inline-block;
+    background-color: goldenrod;
+    color: black !important;
+    border-radius: 4px;
+    border: 2px solid #fff;
+    text-align: center;
+    font-size: 1.0em;
+    font-weight: 700;
+    font-family: 'Amatic SC', cursive;
+    padding: 20px;
+    width: 150px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+    }
+
+.button1 span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.button1 span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.button1:hover span {
+    padding-right: 25px;
+}
+
+.button1:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+input[type="file"] { 
+  z-index: -1;
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  width: 0;
+}
+
+input:focus + label {
+  outline: 2px solid;
+}
+
+#file-upload-filename {
+  color: #fff;
+  font-family: 'Pernament Marker', cursive;
+  font-weight: 900;
+}
+  </style>
 </head>
 <body style="background-color: #1e1e1e">
 	<div class="inner" style="background-color: #1e1e1e">
@@ -19,7 +81,14 @@
 	<div class="ml-container" style="background-color: #1e1e1e	">
 		<form action="{{  url_for('sentiment') }}" method='POST'>
 			<p class='topic' style="color: #FFFFFF">Enter Sentence:</p><input class="text" name="text" placeholder="  Enter sentence.."><br>
-			<div class="button">
+            <br>
+            <div>
+                <div id="file-upload-filename"></div>
+                <input type="file" id="file-upload" name="data_file">
+                <label for='file-upload' class="button1"><span>Upload text file</span></label>
+            </div>
+            <br>
+            <div class="button">
 				<input class="predict-button" type="submit" value="Predict">
 			</div>
 		</form>
@@ -41,4 +110,18 @@
 		</div>
 	</div>
 </body>
+<script>
+    var input = document.getElementById( 'file-upload' );
+    var infoArea = document.getElementById( 'file-upload-filename' );
+    input.addEventListener( 'change', showFileName );
+    function showFileName( event ) {
+        // the change event gives us the input it occurred in 
+        var input = event.srcElement;
+        // the input has an array of files in the `files` property, each one has a name that you can use. 
+        // We're just using the name here.
+        var fileName = input.files[0].name;
+        // use fileName however fits your app best, i.e. add it into a div
+        infoArea.textContent = fileName;
+    }                
+</script>
 </html>

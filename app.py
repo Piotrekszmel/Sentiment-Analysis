@@ -17,6 +17,13 @@ def index():
 
 @app.route("/Sentiment", methods=["GET", "POST"])
 def sentiment():
+    f = request.form["data_file"]
+    text = []
+    with open(f) as file:
+        for line in file:
+            line = line.replace("\r", "").replace("\n", "")
+            text.append(line)
+    print(text)
     if request.method == "POST":
         message = request.form["text"]
         with graph.as_default():
