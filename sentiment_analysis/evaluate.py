@@ -2,8 +2,8 @@ import sys
 sys.path.append('utilities/')
 sys.path.append("models/")
 
-from SentimentAnalysis.utilities.data_loader import get_embeddings, Loader, prepare_dataset, prepare_text_only_dataset
-from SentimentAnalysis.models.nn_models import build_attention_RNN
+from sentiment_analysis.utilities.data_loader import get_embeddings, Loader, prepare_dataset, prepare_text_only_dataset
+from sentiment_analysis.models.nn_models import build_attention_RNN
 from keras.layers import LSTM
 import numpy as np
 from sklearn.pipeline import Pipeline

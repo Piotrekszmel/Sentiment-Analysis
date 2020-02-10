@@ -1,7 +1,7 @@
 datastories.twitter.300d.pickle
 49570.pickle
 12284.pickle
-/embeddings/datastories.twitter.300d.pickle
+sentiment_analysis/embeddings/datastories.twitter.300d.pickle
 bi_model_weights_1.h5
-/weights
-/embeddings
+sentiment_analysis/weights
+sentiment_analysis/embeddings
