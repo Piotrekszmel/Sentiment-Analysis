@@ -104,8 +104,8 @@ p {
 }
 
 .prediction-section p {	
-	font-size: 5.5em;
-	font-weight: 900;
+	font-size: 0.1em;
+	font-weight: bold;
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -153,13 +153,13 @@ p {
 
 @media only screen and (max-width: 500px) {
 	.prediction-section p {
-		font-size: 4.5em;
-	}
-	.inner p {
 		font-size: 1.1em;
 	}
+	.inner p {
+		font-size: 0.5em;
+	}
 	.inner h2 {
-		font-size: 2.3em;
+		font-size: 1.0em;
 	}
 	.text {
 		width: 90%;

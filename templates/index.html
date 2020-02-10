@@ -98,16 +98,22 @@ input:focus + label {
 			</form>
 		</div>
         <div class="prediction-section">
-			{% if prediction == 0 %}
-				<p style="color:red">NEGATIVE</p>
-			{% elif prediction == 1 %}
-				<p style="color:gray">NEUTRAL</p>
-			{% elif prediction == 2 %}
-				<p style="color:green">POSITIVE</p>
-			{% else %}
-				<p></p>
-			{% endif %}
-		</div>
+            <p style="color: green; font-size: 1em;">POSITIVE</p>
+            <p style="color: gray; font-size: 1em;">NEUTRAL</p>
+            <p style="color: red; font-size: 1em";>NEGATIVE</p>
+            <br/>
+            {% for prediction in predictions %}    
+                {% if prediction[0] == 0 %}
+                    <p style="color:red; font-size: 1em;">{{texts[loop.index0]}}</p>
+                {% elif prediction[0] == 1 %}
+                   <p style="color:gray; font-size: 1em;">{{texts[loop.index0]}}</p>
+                {% elif prediction[0] == 2 %}
+                    <p style="color:green; font-size: 1em;">{{texts[loop.index0]}}</p>
+                {% else %}
+                    <p></p>
+                {% endif %}
+            {% endfor %}
+        </div>
 	</div>
 </body>
 <script>
