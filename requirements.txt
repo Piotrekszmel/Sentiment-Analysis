@@ -18,4 +18,5 @@ termcolor==1.1.0
 nltk==3.2.4
 ujson==1.35
 ftfy==4.4.3
+gunicorn==20.0.4
 
