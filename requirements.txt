@@ -7,7 +7,7 @@ ekphrasis==0.4.9
 Keras==2.0.8
 keras_utilities==0.5.0
 frozendict==1.2
-tensorflow==1.14.0
+tensorflow==1.15.2
 flask
 keras-applications==1.0.6
 keras-preprocessing==1.0.5
