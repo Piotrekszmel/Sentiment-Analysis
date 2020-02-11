@@ -58,4 +58,4 @@ if __name__ == "__main__":
     
     loader = Loader(word_indices, text_lengths=50)
     
-    app.run(debug=False, port=5001, host='0.0.0.0')
+    app.run(debug=False, port=5005, host='0.0.0.0')
