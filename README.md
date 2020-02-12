@@ -2,7 +2,7 @@
 Sentiment Analysis based on word-embeddings pre-trained on a twitter messages. It is RNN model using Attention layer.
 
 1. You need to Download [word-embeddings-300d](https://mega.nz/#!u4hFAJpK!UeZ5ERYod-SwrekW-qsPSsl-GYwLFQkh06lPTR7K93I) and put it in embeddings/
-2. Create weights/ inside sentiment_analysis/. Download [Weights](https://drive.google.com/file/d/1OPDocwIghXQq7G3BuZVnFS7H2YUT8mnD/view?usp=sharing) and place them in weights/
+2. Create weights/ inside sentiment_analysis/. Download [weights](https://drive.google.com/file/d/1OPDocwIghXQq7G3BuZVnFS7H2YUT8mnD/view?usp=sharing) and place them in weights/
 
 # Usage
 
