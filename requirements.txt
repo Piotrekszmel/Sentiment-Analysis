@@ -16,7 +16,7 @@ matplotlib==2.2.2
 setuptools==41.0.0
 termcolor==1.1.0
 nltk>=3.4.5
-ujson==1.35
+ujson==5.4.0
 ftfy==4.4.3
 gunicorn==20.0.4
 
