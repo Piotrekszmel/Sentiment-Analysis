@@ -13,7 +13,7 @@ keras-applications==1.0.6
 keras-preprocessing==1.0.5
 colorama==0.3.9
 matplotlib==2.2.2
-setuptools==41.0.0
+setuptools==65.5.1
 termcolor==1.1.0
 nltk>=3.4.5
 ujson==1.35
